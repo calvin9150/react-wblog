@@ -1,0 +1,4 @@
+.next
+/front/build
+node_modules
+.env
