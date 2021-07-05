@@ -8,9 +8,9 @@ const db = require("./models");
 
 const postRouter = require("./routes/post");
 
-// dotenv.config();
+dotenv.config();
 
-// db.sequelize.sync();
+db.sequelize.sync();
 
 const app = express();
 
