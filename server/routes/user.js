@@ -1,11 +1,37 @@
 const express = require("express");
-const { User } = require("../models");
+const { User, Post } = require("../models");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 
-router.post("/login", (req, res, next) => {
+router.get("/", async (req, res, next) => {
+  try {
+    if (req.user) {
+      const fullUserWithoutPwd = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ["password"],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+        ],
+      });
+      res.status(200).json(fullUserWithoutPwd);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+router.post("/login", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error(err);
@@ -18,12 +44,24 @@ router.post("/login", (req, res, next) => {
       if (loginErr) {
         return next(loginErr);
       }
-      return res.status(200).json(user);
+      const fullUserWithoutPwd = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ["password"],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+        ],
+      });
+      return res.status(200).json(fullUserWithoutPwd);
     });
   })(req, res, next);
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -50,10 +88,10 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.post("/logout", (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   req.logout();
   req.session.destroy();
-  req.send("logout succeed");
+  res.send("logout succeed");
 });
 
 module.exports = router;
