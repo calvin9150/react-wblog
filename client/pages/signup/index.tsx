@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 
-export default function Travel() {
+export default function Signup() {
   return (
     <>
       <Header />
-      <h1> travel </h1>
+      <div>회원가입</div>
     </>
   );
 }

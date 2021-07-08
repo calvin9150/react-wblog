@@ -1,7 +1,10 @@
+import Header from "@/components/Header";
+
 export default function Signup() {
   return (
-    <div>
+    <>
+      <Header />
       <h1> 글쓰기 </h1>
-    </div>
+    </>
   );
 }

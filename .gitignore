@@ -2,3 +2,4 @@
 /front/build
 node_modules
 .env
+client/next-env.d.ts
