@@ -1,6 +1,18 @@
+import Header from "@/components/Header";
+import wrapper from "@/store/configureStore";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <title>Wblog</title>
+      </Head>
+      <Header />
+      <Component {...pageProps} />
+    </>
+  );
 }
-export default MyApp;
+export default wrapper.withRedux(MyApp);

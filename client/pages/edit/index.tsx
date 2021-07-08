@@ -1,9 +1,11 @@
-import Header from "@/components/Header";
+import Head from "next/head";
 
 export default function Signup() {
   return (
     <>
-      <Header />
+      <Head>
+        <title>Wblog 글쓰기</title>
+      </Head>
       <h1> 글쓰기 </h1>
     </>
   );
