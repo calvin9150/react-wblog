@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signup, signin } from "@/actions/user";
+import { signup, signin, logout } from "@/actions/user";
 
 export interface User {
   email: string;
@@ -13,11 +13,15 @@ const initialState = {
     nickname: "",
     password: "",
   },
-  isLoading: false,
-  isLoggedIn: false,
+  signupLoading: false,
   signupDone: false,
   signupError: false,
+  signinLoading: false,
+  signinDone: false,
   signinError: false,
+  logoutLoading: false,
+  logoutDone:false,
+  logoutError: false,
 };
 
 export const userSlice = createSlice({
@@ -26,11 +30,14 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signup.pending, () => {})
-      .addCase(signup.fulfilled, (state) => {
+      .addCase(signup.pending, ((state:{signupLoading:boolean}) => {
+        state.signupLoading = true;
+      })
+      .addCase(signup.fulfilled, ((state:{signupLoading:boolean, signupDone:boolean}) => {
+          state.signupLoading = false;
         state.signupDone = true;
       })
-      .addCase(signup.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(signup.rejected, (state, action: PayloadAction<any, string>) => {
         state.signupError = action.payload;
       })
       .addCase(signin.pending, (state) => {
@@ -42,9 +49,16 @@ export const userSlice = createSlice({
         state.user.email = action.payload.email;
         state.user.nickname = action.payload.nickname;
       })
-      .addCase(signin.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(signin.rejected, (state, action: PayloadAction<any, string>) => {
         state.isLoading = false;
         state.signinError = action.payload;
+      })
+      .addCase(logout.pending, () => {})
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoggedIn = false;
+      })
+      .addCase(logout.rejected, (state, action: PayloadAction<any, string>) => {
+        state.logoutError = action.payload;
       });
   },
 });
