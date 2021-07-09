@@ -18,3 +18,20 @@ export const signup = createAsyncThunk(
     }
   }
 );
+
+export const signin = createAsyncThunk(
+  "user/signin",
+  async (data: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/user/login", data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const logout = createAsyncThunk("/user/logout", async () => {
+  await axios.post("/logout");
+});

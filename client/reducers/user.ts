@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signup } from "@/actions/user";
+import { signup, signin } from "@/actions/user";
 
 export interface User {
   email: string;
@@ -17,6 +17,7 @@ const initialState = {
   isLoggedIn: false,
   signupDone: false,
   signupError: false,
+  signinError: false,
 };
 
 export const userSlice = createSlice({
@@ -25,12 +26,25 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signup.pending, (state, action) => {})
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(signup.pending, () => {})
+      .addCase(signup.fulfilled, (state) => {
         state.signupDone = true;
       })
       .addCase(signup.rejected, (state, action: PayloadAction<any>) => {
         state.signupError = action.payload;
+      })
+      .addCase(signin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(signin.fulfilled, (state, action: PayloadAction<User>) => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.user.email = action.payload.email;
+        state.user.nickname = action.payload.nickname;
+      })
+      .addCase(signin.rejected, (state, action: PayloadAction<any>) => {
+        state.isLoading = false;
+        state.signinError = action.payload;
       });
   },
 });

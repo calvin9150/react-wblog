@@ -1,4 +1,8 @@
+import { signin } from "@/actions/user";
+import useInput from "@/hooks/useInput";
 import Head from "next/head";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -30,24 +34,52 @@ const Label = styled.label`
 `;
 
 const Login = () => {
+  const [email, onChangeEmail] = useInput("");
+  const [password, onChangePassword] = useInput("");
+
+  const dispatch = useDispatch();
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(
+        signin({
+          email,
+          password,
+        })
+      );
+    },
+    [email, password]
+  );
+
   return (
     <>
       <Head>
         <title>Wblog 로그인</title>
       </Head>
       <Container>
-        <Form>
+        <Form onSubmit={onSubmit}>
           <div>
             <Label htmlFor="email-input">이메일</Label>
-            <input type="email" id="email-input" />
+            <input
+              type="email"
+              id="email-input"
+              value={email}
+              onChange={onChangeEmail}
+            />
           </div>
 
           <div>
             <Label htmlFor="password-input">비밀번호</Label>
-            <input type="password" id="password-input" />
+            <input
+              type="password"
+              id="password-input"
+              value={password}
+              onChange={onChangePassword}
+            />
           </div>
+          <button type="submit">로그인</button>
         </Form>
-        <button>로그인</button>
         <button>
           <a href="/signup">회원가입</a>
         </button>
