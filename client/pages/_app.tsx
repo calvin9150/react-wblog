@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import wrapper from "@/store/configureStore";
+import wrapper from "@/store/store";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 

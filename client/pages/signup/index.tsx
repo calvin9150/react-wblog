@@ -2,6 +2,8 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import Head from "next/head";
 import { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "@/actions/user";
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +34,8 @@ const Label = styled.label`
 `;
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [email, onChangeEmail] = useInput("");
   const [nickname, onChangeNickname] = useInput("");
   const [password, , setPassword] = useInput("");
@@ -40,7 +44,7 @@ const Signup = () => {
 
   const onChangePassword = useCallback(
     (e) => {
-      setPassword(e.tartget.value);
+      setPassword(e.target.value);
       setPasswordEqual(e.target.value !== passwordCheck);
     },
     [password]
@@ -48,7 +52,7 @@ const Signup = () => {
 
   const onChangePasswordCheck = useCallback(
     (e) => {
-      setPasswordCheck(e.tartget.value);
+      setPasswordCheck(e.target.value);
       setPasswordEqual(e.target.value !== password);
     },
     [passwordCheck]
@@ -57,12 +61,20 @@ const Signup = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      console.log("adsdasads");
       console.log(email, nickname, password);
       if (!passwordEqual) {
         alert("비밀번호가 서로 맞지 않습니다.");
       }
+      dispatch(
+        signup({
+          nickname: nickname,
+          email: email,
+          password: password,
+        })
+      );
     },
-    [email, nickname, password, passwordCheck]
+    [dispatch, email, nickname, password, passwordCheck]
   );
 
   return (
@@ -108,10 +120,8 @@ const Signup = () => {
               onChange={onChangePasswordCheck}
             />
           </div>
+          <button type="submit">회원가입</button>
         </Form>
-        <button>
-          <a href="/signup">회원가입</a>
-        </button>
       </Container>
     </>
   );

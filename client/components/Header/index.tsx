@@ -1,7 +1,9 @@
-import { Navbar } from "@/components/Header/styles";
 import React, { FC } from "react";
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+
+import { Navbar } from "@/components/Header/styles";
 
 const Header: FC = ({ children }) => {
   return (
