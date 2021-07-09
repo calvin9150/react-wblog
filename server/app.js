@@ -10,6 +10,7 @@ const db = require("./models");
 
 const passportConfig = require("./passport");
 
+const postsRouter = require("./routes/posts");
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
 
@@ -25,9 +26,10 @@ db.sequelize
 
 passportConfig();
 
+app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:3005",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -44,6 +46,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/posts", postsRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);
 

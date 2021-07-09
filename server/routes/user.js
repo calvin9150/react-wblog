@@ -61,7 +61,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
-router.post("/", isNotLoggedIn, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -80,7 +80,7 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       nickname: req.body.nickname,
       password: hashedPwd,
     });
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3005");
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
     return res.status(201).send("user 등록됨");
   } catch (err) {
     console.error(err);
