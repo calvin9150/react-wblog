@@ -1,7 +1,8 @@
 import { signin } from "@/actions/user";
 import useInput from "@/hooks/useInput";
+import { User } from "@/reducers/user";
 import Head from "next/head";
-import { useCallback } from "react";
+import { FC, FormEvent, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -33,14 +34,14 @@ const Label = styled.label`
   margin: 50px 50px;
 `;
 
-const Login = () => {
+const Login: FC = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
   const dispatch = useDispatch();
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(
         signin({

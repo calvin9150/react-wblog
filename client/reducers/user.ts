@@ -20,7 +20,7 @@ const initialState = {
   signinDone: false,
   signinError: false,
   logoutLoading: false,
-  logoutDone:false,
+  logoutDone: false,
   logoutError: false,
 };
 
@@ -30,32 +30,35 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signup.pending, ((state:{signupLoading:boolean}) => {
+      .addCase(signup.pending, (state: { signupLoading: boolean }) => {
         state.signupLoading = true;
       })
-      .addCase(signup.fulfilled, ((state:{signupLoading:boolean, signupDone:boolean}) => {
+      .addCase(
+        signup.fulfilled,
+        (state: { signupLoading: boolean; signupDone: boolean }) => {
           state.signupLoading = false;
-        state.signupDone = true;
-      })
+          state.signupDone = true;
+        }
+      )
       .addCase(signup.rejected, (state, action: PayloadAction<any, string>) => {
         state.signupError = action.payload;
       })
-      .addCase(signin.pending, (state) => {
-        state.isLoading = true;
+      .addCase(signin.pending, (state: { signinLoading: boolean }) => {
+        state.signinLoading = true;
       })
       .addCase(signin.fulfilled, (state, action: PayloadAction<User>) => {
-        state.isLoading = false;
-        state.isLoggedIn = true;
+        state.signinLoading = false;
+        state.signinDone = true;
         state.user.email = action.payload.email;
         state.user.nickname = action.payload.nickname;
       })
       .addCase(signin.rejected, (state, action: PayloadAction<any, string>) => {
-        state.isLoading = false;
+        state.signinLoading = false;
         state.signinError = action.payload;
       })
       .addCase(logout.pending, () => {})
       .addCase(logout.fulfilled, (state) => {
-        state.isLoggedIn = false;
+        state.signinDone = false;
       })
       .addCase(logout.rejected, (state, action: PayloadAction<any, string>) => {
         state.logoutError = action.payload;

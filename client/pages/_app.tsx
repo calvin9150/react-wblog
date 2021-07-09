@@ -1,9 +1,11 @@
-import Header from "@/components/Header";
 import wrapper from "@/store/store";
-import type { AppProps } from "next/app";
+import { AppProps } from "next/app";
 import Head from "next/head";
 
-function MyApp({ Component, pageProps }: AppProps) {
+import Header from "@/components/Header";
+import { FC } from "react";
+
+const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
@@ -14,5 +16,5 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </>
   );
-}
+};
 export default wrapper.withRedux(MyApp);
