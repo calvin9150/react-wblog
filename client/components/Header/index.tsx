@@ -4,9 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-import { Navbar } from "@/components/Header/styles";
+import { Navbar, LoginBtn } from "@/components/Header/styles";
+import { useSelector } from "react-redux";
+import { ReducerType } from "@/reducers";
 
 const Header: FC = ({ children }) => {
+  const isLoggedIn = useSelector((state: ReducerType) => state.user.signinDone);
+  console.log({ isLoggedIn });
+
   return (
     <Navbar>
       <div className="header-inner">
@@ -32,13 +37,13 @@ const Header: FC = ({ children }) => {
                 <a>여행</a>
               </Link>
             </li>
-            <li>
+            <LoginBtn login={isLoggedIn}>
               <Link href="/login">
                 <a>
                   <FontAwesomeIcon icon={faUserEdit} />
                 </a>
               </Link>
-            </li>
+            </LoginBtn>
           </ul>
         </div>
       </div>

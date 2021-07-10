@@ -2,10 +2,12 @@ import { FC, FormEvent, useCallback } from "react";
 import { signin } from "@/actions/user";
 import { User } from "@/reducers/user";
 import useInput from "@/hooks/useInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
+import { ReducerType } from "@/reducers";
+import router from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +38,8 @@ const Label = styled.label`
 `;
 
 const Login: FC = () => {
+  const isLoggedIn = useSelector((state: ReducerType) => state.user.signinDone);
+
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 

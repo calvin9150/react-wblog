@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { User } from "@/reducers/user";
+import router from "next/router";
 
 axios.defaults.baseURL = "http://localhost:3005";
 axios.defaults.withCredentials = true;
@@ -24,6 +25,7 @@ export const signin = createAsyncThunk(
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await axios.post("/user/login", data);
+      router.back();
       return response.data;
     } catch (err) {
       console.log(err);

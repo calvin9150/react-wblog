@@ -4,6 +4,9 @@ import Head from "next/head";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "@/actions/user";
+import { AppProps } from "next/app";
+import { FC } from "react";
+import { ReducerType } from "@/reducers";
 
 const Container = styled.div`
   display: flex;
@@ -18,13 +21,13 @@ const Form = styled.form`
   margin: 30px auto;
   font-size: 20px;
 
-  & input {
+  input {
     width: 200px;
     height: 20px;
     float: right;
   }
 
-  & div {
+  div {
     margin-bottom: 50px;
   }
 `;
@@ -33,7 +36,9 @@ const Label = styled.label`
   margin: 50px 50px;
 `;
 
-const Signup = () => {
+const Signup: FC<AppProps> = () => {
+  const isLoggedIn = useSelector((state: ReducerType) => state.user.signinDone);
+
   const dispatch = useDispatch();
 
   const [email, onChangeEmail] = useInput("");

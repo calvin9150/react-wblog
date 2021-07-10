@@ -1,6 +1,12 @@
+import { ReducerType } from "@/reducers";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 export const mobile = `@media only screen and(max - width: 768px)`;
+
+export const LoginBtn = styled.li<any>`
+  display: ${(props) => (props.login ? "none" : "block")};
+`;
 
 export const Navbar = styled.div`
   display: flex;
