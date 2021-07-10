@@ -1,10 +1,11 @@
-import { signin } from "@/actions/user";
-import useInput from "@/hooks/useInput";
-import { User } from "@/reducers/user";
-import Head from "next/head";
 import { FC, FormEvent, useCallback } from "react";
+import { signin } from "@/actions/user";
+import { User } from "@/reducers/user";
+import useInput from "@/hooks/useInput";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import Head from "next/head";
+import Link from "next/link";
 
 const Container = styled.div`
   display: flex;
@@ -82,7 +83,9 @@ const Login: FC = () => {
           <button type="submit">로그인</button>
         </Form>
         <button>
-          <a href="/signup">회원가입</a>
+          <Link href="/signup">
+            <a>회원가입</a>
+          </Link>
         </button>
       </Container>
     </>

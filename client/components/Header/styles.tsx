@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
+export const mobile = `@media only screen and(max - width: 768px)`;
+
 export const Navbar = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
   border-bottom: 5px ridge rgba(135, 137, 137, 0.11);
 
-  & .user {
+  .user {
     position: absolute;
     top: 10px;
     right: 50px;
   }
 
-  & .header-inner {
+  .header-inner {
     width: 1200px;
     display: flex;
     justify-content: space-between;
@@ -20,28 +22,28 @@ export const Navbar = styled.div`
     font-size: 20px;
   }
 
-  & .logo {
+  .logo {
     display: flex;
     align-items: center;
     margin: 10px 0 20px;
     font-size: 35px;
   }
 
-  & .menu-list {
+  .menu-list {
     display: flex;
     list-style: none;
 
-    @media only screen and (max-width: 768px) {
+    ${mobile} {
       display: none;
     }
   }
 
-  & .menu-list li {
+  .menu-list li {
     position: relative;
     margin: 0 20px;
   }
 
-  & .menu-list li::before {
+  .menu-list li::before {
     content: "";
     width: 2px;
     height: 13px;
@@ -53,11 +55,11 @@ export const Navbar = styled.div`
     margin: auto;
   }
 
-  & .menu-list li:last-child:before {
+  .menu-list li:last-child:before {
     display: none;
   }
 
-  & a {
+  a {
     text-decoration: none;
     color: #000000;
   }

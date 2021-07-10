@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 import { Navbar } from "@/components/Header/styles";
 
@@ -10,23 +11,33 @@ const Header: FC = ({ children }) => {
     <Navbar>
       <div className="header-inner">
         <div className="logo">
-          <a href="/">Wblog</a>
+          <Link href="/">
+            <a>Wblog</a>
+          </Link>
         </div>
         <div className="menu">
           <ul className="menu-list">
             <li>
-              <a href="/">HOME</a>
+              <Link href="/">
+                <a>HOME</a>
+              </Link>
             </li>
             <li>
-              <a href="/category/programming">프로그래밍</a>
+              <Link href="/category/programming">
+                <a>프로그래밍</a>
+              </Link>
             </li>
             <li>
-              <a href="/category/travel">여행</a>
+              <Link href="/category/travel">
+                <a>여행</a>
+              </Link>
             </li>
             <li>
-              <a href="/login">
-                <FontAwesomeIcon icon={faUserEdit} />
-              </a>
+              <Link href="/login">
+                <a>
+                  <FontAwesomeIcon icon={faUserEdit} />
+                </a>
+              </Link>
             </li>
           </ul>
         </div>
