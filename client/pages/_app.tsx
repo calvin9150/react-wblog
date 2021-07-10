@@ -1,9 +1,10 @@
 import wrapper from "@/store/store";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import Link from "next/link";
+import { FC } from "react";
 
 import Header from "@/components/Header";
-import { FC } from "react";
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
