@@ -1,27 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signup, signin, logout } from "@/actions/user";
+import { signup, signin, logout, loadUser } from "@/actions/user";
 
 export interface User {
-  email: string;
-  nickname: string;
-  password: string;
+  email: string | null;
+  nickname: string | null;
+  password: string | null;
 }
 
 const initialState = {
-  user: {
+  user: <User>{
     email: "",
     nickname: "",
     password: "",
   },
   signupLoading: false,
   signupDone: false,
-  signupError: false,
+  signupError: null,
   signinLoading: false,
   signinDone: false,
-  signinError: false,
+  signinError: null,
   logoutLoading: false,
   logoutDone: false,
-  logoutError: false,
+  logoutError: null,
+  loadUserLoading: false,
+  loadUserDone: false,
+  loadUserError: null,
 };
 
 export const userSlice = createSlice({
@@ -56,13 +59,35 @@ export const userSlice = createSlice({
         state.signinLoading = false;
         state.signinError = action.payload;
       })
-      .addCase(logout.pending, () => {})
+      .addCase(logout.pending, (state) => {
+        state.logoutLoading = true;
+      })
       .addCase(logout.fulfilled, (state) => {
+        state.logoutLoading = false;
         state.signinDone = false;
       })
       .addCase(logout.rejected, (state, action: PayloadAction<any, string>) => {
+        state.logoutLoading = false;
         state.logoutError = action.payload;
-      });
+      })
+      .addCase(loadUser.pending, (state) => {
+        state.loadUserLoading = true;
+        state.loadUserDone = false;
+      })
+      .addCase(loadUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.loadUserLoading = false;
+        state.loadUserDone = true;
+        state.user.email = action.payload?.email;
+        state.user.nickname = action.payload?.nickname;
+      })
+      .addCase(
+        loadUser.rejected,
+        (state, action: PayloadAction<any, string>) => {
+          state.loadUserLoading = false;
+          state.loadUserDone = false;
+          state.loadUserError = action.payload;
+        }
+      );
   },
 });
 

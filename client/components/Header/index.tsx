@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 import { ReducerType } from "@/reducers";
 
 const Header: FC = ({ children }) => {
-  const isLoggedIn = useSelector((state: ReducerType) => state.user.signinDone);
-  console.log({ isLoggedIn });
+  const isLoggedIn = useSelector((state: ReducerType) => state.user);
+  console.log("유저이메일" + isLoggedIn.user.email);
 
   return (
     <Navbar>
@@ -37,7 +37,7 @@ const Header: FC = ({ children }) => {
                 <a>여행</a>
               </Link>
             </li>
-            <LoginBtn login={isLoggedIn}>
+            <LoginBtn email={isLoggedIn.user.email}>
               <Link href="/login">
                 <a>
                   <FontAwesomeIcon icon={faUserEdit} />

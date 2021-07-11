@@ -8,9 +8,10 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
+    console.log(req.user);
     if (req.user) {
       const fullUserWithoutPwd = await User.findOne({
-        where: { id: user.id },
+        where: { id: req.user.id },
         attributes: {
           exclude: ["password"],
         },

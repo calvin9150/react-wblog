@@ -11,11 +11,11 @@ export const signup = createAsyncThunk(
   "user/signup",
   async (data: User, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/user", data);
-      return response.data;
+      const result = await axios.post("/user", data);
+      return result.data;
     } catch (err) {
       console.log(err);
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.result.data);
     }
   }
 );
@@ -24,16 +24,29 @@ export const signin = createAsyncThunk(
   "user/signin",
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/user/login", data);
+      const result = await axios.post("/user/login", data);
+      console.log("로그인");
+      console.log(result.data);
       router.back();
-      return response.data;
+      return result.data;
     } catch (err) {
       console.log(err);
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.result.data);
     }
   }
 );
 
 export const logout = createAsyncThunk("/user/logout", async () => {
   await axios.post("/logout");
+});
+
+export const loadUser = createAsyncThunk("/user/load", async () => {
+  try {
+    const result = await axios.get("/user");
+    console.log("유저로드");
+    console.log(result.data);
+    return result.data;
+  } catch (err) {
+    return console.log(err);
+  }
 });

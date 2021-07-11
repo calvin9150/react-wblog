@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const mobile = `@media only screen and(max - width: 768px)`;
 
 export const LoginBtn = styled.li<any>`
-  display: ${(props) => (props.login ? "none" : "block")};
+  display: ${(props) => (props.email === undefined ? "block" : "none")};
 `;
 
 export const Navbar = styled.div`
