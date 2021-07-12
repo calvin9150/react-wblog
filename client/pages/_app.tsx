@@ -3,6 +3,8 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import Link from "next/link";
 import { FC } from "react";
+import "codemirror/lib/codemirror.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 import Header from "@/components/Header";
 
