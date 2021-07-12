@@ -2,10 +2,14 @@ import { ReducerType } from "@/reducers";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-export const mobile = `@media only screen and(max - width: 768px)`;
+export const mobile = `@media only screen and (max-width: 768px)`;
 
 export const LoginBtn = styled.li<any>`
   display: ${(props) => (props.email === undefined ? "block" : "none")};
+`;
+
+export const LogoutBtn = styled.li<any>`
+  display: ${(props) => (props.email !== undefined ? "block" : "none")};
 `;
 
 export const Navbar = styled.div`
@@ -61,7 +65,10 @@ export const Navbar = styled.div`
     margin: auto;
   }
 
-  .menu-list li:last-child:before {
+  .menu-list li:nth-child(4):before {
+    display: none;
+  }
+  .menu-list li:nth-child(5):before {
     display: none;
   }
 

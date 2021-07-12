@@ -37,7 +37,12 @@ export const signin = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("/user/logout", async () => {
-  await axios.post("/logout");
+  try {
+    const result = await axios.post("/user/logout");
+    return result.data;
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 export const loadUser = createAsyncThunk("/user/load", async () => {

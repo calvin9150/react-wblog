@@ -1,16 +1,21 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import React, { FC, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-import { Navbar, LoginBtn } from "@/components/Header/styles";
-import { useSelector } from "react-redux";
+import { Navbar, LoginBtn, LogoutBtn } from "@/components/Header/styles";
+import { useDispatch, useSelector } from "react-redux";
 import { ReducerType } from "@/reducers";
+import { logout } from "@/actions/user";
 
 const Header: FC = ({ children }) => {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: ReducerType) => state.user);
   console.log("유저이메일" + isLoggedIn.user.email);
+
+  const onLogout = useCallback(() => {
+    dispatch(logout());
+  }, []);
 
   return (
     <Navbar>
@@ -44,6 +49,13 @@ const Header: FC = ({ children }) => {
                 </a>
               </Link>
             </LoginBtn>
+            <LogoutBtn email={isLoggedIn.user.email} onClick={onLogout}>
+              <Link href="/">
+                <a>
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                </a>
+              </Link>
+            </LogoutBtn>
           </ul>
         </div>
       </div>
