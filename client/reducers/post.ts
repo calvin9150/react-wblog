@@ -5,12 +5,14 @@ import { addPost } from "@/actions/post";
 export interface Post {
   title: string | null;
   content: string | null;
+  category: string | null;
 }
 
 const initialState = {
   post: <Post>{
     title: null,
     content: null,
+    category: null,
   },
   addPostLoading: false,
   addPostDone: false,

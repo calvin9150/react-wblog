@@ -5,12 +5,20 @@ import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
 import { TuiEditorWithForwardedProps } from "@/components/toast/Editor";
 import { useDispatch } from "react-redux";
 import { addPost } from "@/actions/post";
+import useInput from "@/hooks/useInput";
 
 const SubmitBtn = styled.button`
   width: 100px;
   height: 50px;
   margin: 50px;
   float: right;
+`;
+
+const Title = styled.input`
+  width: 100%;
+  height: 50px;
+  margin: 50px auto;
+  font-size: 25px;
 `;
 
 interface EditorPropsWithHandlers extends EditorProps {
@@ -36,7 +44,9 @@ interface Props extends EditorProps {
 const WysiwygEditor: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
+  const [title, inputChange] = useInput("");
   const [content, setContent] = React.useState<any>();
+  const [category, setCategory] = React.useState<any>("javascript");
   const {
     initialValue,
     previewStyle,
@@ -67,17 +77,35 @@ const WysiwygEditor: React.FC<Props> = (props) => {
       console.log("ㅁㅇㄴㅁㅇㄴㅁㅇㄴ" + content);
       dispatch(
         addPost({
-          title: "dummy title",
+          title: title,
           content: content,
+          category: category,
         })
       );
     },
-    [dispatch, content]
+    [dispatch, content, category, title]
+  );
+
+  const selectChange = React.useCallback(
+    (e) => {
+      setCategory(e.target.value);
+    },
+    [category]
   );
 
   return (
     <>
       <div>
+        <select onChange={selectChange}>
+          <option value="javascript">자바스크립트</option>
+          <option value="travel">여행기</option>
+        </select>
+        <Title
+          type="text"
+          value={title}
+          onChange={inputChange}
+          placeholder="제목"
+        ></Title>
         <EditorWithForwardedRef
           {...props}
           initialValue={initialValue}

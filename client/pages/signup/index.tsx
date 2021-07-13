@@ -66,13 +66,13 @@ const Signup: FC<AppProps> = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log("adsdasads");
       console.log(email, nickname, password);
       if (!passwordEqual) {
         alert("비밀번호가 서로 맞지 않습니다.");
       }
       dispatch(
         signup({
+          id: null,
           nickname: nickname,
           email: email,
           password: password,
