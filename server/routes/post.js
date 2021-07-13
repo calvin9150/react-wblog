@@ -10,6 +10,7 @@ router.post("/", isLoggedIn, async (req, res, next) => {
     const post = await Post.create({
       title: req.body.title,
       content: req.body.content,
+      category: req.body.category,
       UserId: req.user.id,
     });
     const fullPost = await Post.findOne({
