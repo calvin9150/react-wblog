@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import * as React from "react";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
 import { TuiEditorWithForwardedProps } from "@/components/toast/Editor";
+import { useDispatch } from "react-redux";
+import { addPost } from "@/actions/post";
 
 const SubmitBtn = styled.button`
   width: 100px;
@@ -32,6 +34,8 @@ interface Props extends EditorProps {
 }
 
 const WysiwygEditor: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+
   const [content, setContent] = React.useState<any>();
   const {
     initialValue,
@@ -57,9 +61,19 @@ const WysiwygEditor: React.FC<Props> = (props) => {
     );
   }, [props, editorRef]);
 
-  const handleEditor = () => {
-    console.log(content);
-  };
+  const handleEditor = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log("ㅁㅇㄴㅁㅇㄴㅁㅇㄴ" + content);
+      dispatch(
+        addPost({
+          title: "dummy title",
+          content: content,
+        })
+      );
+    },
+    [dispatch, content]
+  );
 
   return (
     <>

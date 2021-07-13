@@ -1,25 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface User {
-  id: number;
-  name: string;
+import { addPost } from "@/actions/post";
+
+export interface Post {
+  title: string | null;
+  content: string | null;
 }
 
-let tempId = 3;
+const initialState = {
+  post: <Post>{
+    title: null,
+    content: null,
+  },
+  addPostLoading: false,
+  addPostDone: false,
+  addPostError: null,
+  loadPostLoading: false,
+  loadPostDone: false,
+  loadPostError: null,
+};
 
-export const users = createSlice({
-  name: "users",
-  initialState: [
-    { id: 1, name: "User1" },
-    { id: 2, name: "User2" },
-  ] as User[],
-  reducers: {
-    addUser(state, action: PayloadAction<User>) {
-      action.payload.id = tempId++;
-      return [...state, action.payload];
-    },
+export const postSlice = createSlice({
+  name: "post",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addPost.pending, (state: { addPostLoading: boolean }) => {
+        state.addPostLoading = true;
+      })
+      .addCase(
+        addPost.fulfilled,
+        (state: { addPostLoading: boolean; addPostDone: boolean }) => {
+          state.addPostLoading = false;
+          state.addPostDone = true;
+        }
+      )
+      .addCase(
+        addPost.rejected,
+        (state, action: PayloadAction<any, string>) => {
+          state.addPostError = action.payload;
+        }
+      );
   },
 });
 
-export const { addUser } = users.actions;
-export default users.reducer;
+export default postSlice;

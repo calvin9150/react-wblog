@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import userSlice from "@/reducers/user";
-import post from "@/reducers/post";
+import postSlice from "@/reducers/post";
 
 const reducer = combineReducers({
   index: (state = {}, action) => {
@@ -14,7 +14,7 @@ const reducer = combineReducers({
     }
   },
   user: userSlice.reducer,
-  post,
+  post: postSlice.reducer,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;
