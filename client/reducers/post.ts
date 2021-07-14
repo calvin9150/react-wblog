@@ -1,3 +1,4 @@
+import { loadPosts } from "./../actions/post";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { addPost } from "@/actions/post";
@@ -9,11 +10,7 @@ export interface Post {
 }
 
 const initialState = {
-  post: <Post>{
-    title: null,
-    content: null,
-    category: null,
-  },
+  mainPosts: [],
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
@@ -38,12 +35,21 @@ export const postSlice = createSlice({
           state.addPostDone = true;
         }
       )
-      .addCase(
-        addPost.rejected,
-        (state, action: PayloadAction<any, string>) => {
-          state.addPostError = action.payload;
-        }
-      );
+      .addCase(addPost.rejected, (state, action: PayloadAction<any>) => {
+        state.addPostError = action.payload;
+      })
+      .addCase(loadPosts.pending, (state: { loadPostLoading: boolean }) => {
+        state.loadPostLoading = true;
+      })
+      .addCase(loadPosts.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loadPostLoading = false;
+        state.loadPostDone = true;
+        state.mainPosts = action.payload.data;
+      })
+      .addCase(loadPosts.rejected, (state, action: PayloadAction<any>) => {
+        state.loadPostLoading = false;
+        state.loadPostError = action.payload;
+      });
   },
 });
 

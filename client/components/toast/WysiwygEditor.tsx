@@ -74,7 +74,6 @@ const WysiwygEditor: React.FC<Props> = (props) => {
   const handleEditor = React.useCallback(
     (e) => {
       e.preventDefault();
-      console.log("ㅁㅇㄴㅁㅇㄴㅁㅇㄴ" + content);
       dispatch(
         addPost({
           title: title,
