@@ -11,7 +11,8 @@ import { logout } from "@/actions/user";
 const Header: FC = ({ children }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: ReducerType) => state.user);
-  console.log("유저이메일" + isLoggedIn.user.email);
+  console.log("이메일");
+  console.log(isLoggedIn.user.email);
 
   const onLogout = useCallback(() => {
     dispatch(logout());
@@ -29,7 +30,7 @@ const Header: FC = ({ children }) => {
           <ul className="menu-list">
             <li>
               <Link href="/">
-                <a>HOME</a>
+                <a>전체보기</a>
               </Link>
             </li>
             <li>

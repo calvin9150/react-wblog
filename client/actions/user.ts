@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import router from "next/router";
 
 import { User } from "@/reducers/user";
-import router from "next/router";
 
 axios.defaults.baseURL = "http://localhost:3005";
 axios.defaults.withCredentials = true;

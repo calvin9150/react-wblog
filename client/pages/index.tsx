@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+
 import { loadUser } from "@/actions/user";
 import { loadPosts } from "@/actions/post";
 import Posts from "@/components/Posts";
@@ -15,8 +16,6 @@ function Home() {
   }, []);
 
   const { mainPosts } = useSelector((state: ReducerType) => state.post);
-
-  console.log(mainPosts);
 
   return (
     <>

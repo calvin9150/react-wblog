@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { signup, signin, logout, loadUser } from "@/actions/user";
 
 export interface User {
+  id: number | null;
   email: string | null;
   nickname: string | null;
   password: string | null;
@@ -54,6 +55,7 @@ export const userSlice = createSlice({
         state.signinDone = true;
         state.user.email = action.payload.email;
         state.user.nickname = action.payload.nickname;
+        state.user.id = action.payload?.id;
       })
       .addCase(signin.rejected, (state, action: PayloadAction<any, string>) => {
         state.signinLoading = false;
@@ -79,6 +81,7 @@ export const userSlice = createSlice({
         state.loadUserDone = true;
         state.user.email = action.payload?.email;
         state.user.nickname = action.payload?.nickname;
+        state.user.id = action.payload?.id;
       })
       .addCase(
         loadUser.rejected,
