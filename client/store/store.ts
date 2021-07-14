@@ -4,11 +4,12 @@ import logger from "redux-logger";
 
 import rootReducer from "@/reducers";
 
-// 개발모드 체크
 const isDev = process.env.NODE_ENV === "development";
 
 const createStore = () => {
-  const middleware = getDefaultMiddleware();
+  const middleware = getDefaultMiddleware({
+    serializableCheck: false,
+  });
   if (isDev) {
     middleware.push(logger);
   }
