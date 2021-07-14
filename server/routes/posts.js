@@ -36,4 +36,73 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/javascript", async (req, res, next) => {
+  try {
+    const posts = await Post.findAll({
+      where: { category: "javascript" },
+      order: [
+        ["createdAt", "DESC"],
+        [Comment, "createdAt", "DESC"],
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+router.get("/travel", async (req, res, next) => {
+  try {
+    const posts = await Post.findAll({
+      where: { category: "travel" },
+      order: [
+        ["createdAt", "DESC"],
+        [Comment, "createdAt", "DESC"],
+      ],
+
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 module.exports = router;
