@@ -34,13 +34,6 @@ router.get("/", async (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      console.error(err);
-      next(err);
-    }
-    if (info) {
-      return res.status(403).send(info.reason);
-    }
     return req.login(user, async (loginErr) => {
       if (loginErr) {
         return next(loginErr);
@@ -71,7 +64,7 @@ router.post("/", async (req, res, next) => {
     });
 
     if (exUser) {
-      return res.status(403).send("이미 사용중인 아이디입니다.");
+      return res.status(405).send("이미 사용중인 아이디입니다.");
     }
 
     const hashedPwd = await bcrypt.hash(req.body.password, 10);

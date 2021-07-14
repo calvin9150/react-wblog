@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { Post } from "@/reducers/post";
+import router from "next/router";
 
 axios.defaults.baseURL = "http://localhost:3005";
 axios.defaults.withCredentials = true;
@@ -10,7 +11,8 @@ export const addPost = createAsyncThunk(
   "post/addpost",
   async (data: Post, { rejectWithValue }) => {
     try {
-      return await axios.post("/post", data);
+      await axios.post("/post", data);
+      return router.push("/");
     } catch (err) {
       console.error(err);
       return rejectWithValue(err.result.data);

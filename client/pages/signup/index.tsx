@@ -44,8 +44,8 @@ const Signup: FC<AppProps> = () => {
   const [email, onChangeEmail] = useInput("");
   const [nickname, onChangeNickname] = useInput("");
   const [password, , setPassword] = useInput("");
-  const [passwordCheck, , setPasswordCheck] = useInput("");
-  const [passwordEqual, setPasswordEqual] = useState(true);
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [passwordEqual, setPasswordEqual] = useState(false);
 
   const onChangePassword = useCallback(
     (e) => {
@@ -67,8 +67,9 @@ const Signup: FC<AppProps> = () => {
     (e) => {
       e.preventDefault();
       console.log(email, nickname, password);
-      if (!passwordEqual) {
+      if (password !== passwordCheck) {
         alert("비밀번호가 서로 맞지 않습니다.");
+        return;
       }
       dispatch(
         signup({

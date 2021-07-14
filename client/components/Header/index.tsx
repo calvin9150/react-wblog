@@ -11,8 +11,6 @@ import { logout } from "@/actions/user";
 const Header: FC = ({ children }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: ReducerType) => state.user);
-  console.log("이메일");
-  console.log(isLoggedIn.user.email);
 
   const onLogout = useCallback(() => {
     dispatch(logout());
