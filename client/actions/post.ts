@@ -26,3 +26,24 @@ export const loadPosts = createAsyncThunk("post/loadposts", async () => {
     console.error(err);
   }
 });
+
+export const loadJavascript = createAsyncThunk(
+  "post/loadjavascript",
+  async () => {
+    try {
+      const result = await axios.get("/posts/javascript");
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const loadTravel = createAsyncThunk("post/loadtravel", async () => {
+  try {
+    const result = await axios.get("/posts/travel");
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+});
