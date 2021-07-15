@@ -7,42 +7,39 @@ import styled from "styled-components";
 
 const Layout = styled.div`
   width: 50%;
-  height: 180px;
-  margin: 30px auto;
-  border-bottom: 1px ridge rgba(135, 137, 137, 0.178);
-  cursor: pointer;
-  :hover {
-    div :first-child {
-      color: #738ddb;
-    }
-  }
+  min-height: 600px;
+  margin: 50px auto;
+  /* border: 1px solid royalblue; */
 `;
 
 const Title = styled.div`
   width: 100%;
-  min-height: 50px;
-  /* border: 1px solid gray; */
-  font-size: 30px;
+  min-height: 70px;
+  margin-bottom: 50px;
+  border-bottom: 1px ridge rgba(135, 137, 137, 0.26);
+  font-size: 40px;
 `;
 
 const Content = styled.div`
   width: 100%;
-  height: 100px;
+  min-height: 150px;
   /* border: 1px solid black; */
-  font-size: 15px;
   overflow: hidden;
 `;
 
-const Posts: FC<AppProps> = ({ post }) => {
+const Post: FC<AppProps> = ({ post }) => {
   const dispatch = useDispatch();
-  const regex = /(<([^>]+)>)/gi;
   const title = post.title;
-  const content = post.content.replace(regex, "");
+  const content = post.content;
   const id = post.id;
 
   const createContent = () => {
     return { __html: content };
   };
+
+  // const deleteClick = useEffect(() => {
+  //   dispatch(deletePost(id));
+  // }, []);
 
   return (
     <>
@@ -50,12 +47,11 @@ const Posts: FC<AppProps> = ({ post }) => {
         <Link href={{ pathname: "/category", query: { postId: post.id } }}>
           <Title>{title}</Title>
         </Link>
-        <Link href={{ pathname: "/category", query: { postId: post.id } }}>
-          <Content dangerouslySetInnerHTML={createContent()} />
-        </Link>
+        <Content dangerouslySetInnerHTML={createContent()} />
+        {/* <button onClick={deleteClick}>삭제</button> */}
       </Layout>
     </>
   );
 };
 
-export default Posts;
+export default Post;

@@ -1,14 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { loadJavascript, loadPosts } from "@/actions/post";
 import { loadUser } from "@/actions/user";
 import { ReducerType } from "@/reducers";
 import Posts from "@/components/Posts";
+import { AppProps } from "next/dist/next-server/lib/router/router";
 
-export default function Programming() {
+const Programming: FC<AppProps> = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,4 +31,6 @@ export default function Programming() {
       ))}
     </>
   );
-}
+};
+
+export default Programming;

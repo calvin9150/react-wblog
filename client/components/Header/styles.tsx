@@ -1,5 +1,3 @@
-import { ReducerType } from "@/reducers";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 export const mobile = `@media only screen and (max-width: 768px)`;
@@ -29,13 +27,14 @@ export const Navbar = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 0 50px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .logo {
     display: flex;
     align-items: center;
     margin: 10px 0 20px;
+    font-family: fantasy;
     font-size: 35px;
   }
 
@@ -56,7 +55,7 @@ export const Navbar = styled.div`
   .menu-list li::before {
     content: "";
     width: 2px;
-    height: 13px;
+    height: 8px;
     background-color: #6e65656c;
     position: absolute;
     right: -20px;
@@ -75,5 +74,22 @@ export const Navbar = styled.div`
   a {
     text-decoration: none;
     color: #000000;
+  }
+
+  a:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: -5px;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #12756575;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+  a:hover:after {
+    width: 100%;
+    left: 0;
   }
 `;

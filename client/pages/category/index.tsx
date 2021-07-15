@@ -1,6 +1,6 @@
 import { loadPost } from "@/actions/post";
 import { loadUser } from "@/actions/user";
-import Posts from "@/components/Posts";
+import Post from "@/components/Post";
 import { ReducerType } from "@/reducers";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ export default function PostAll() {
       </Head>
       <h1>category {postId} 번 게시글</h1>
       {mainPosts.map((post: { id: React.Key | null | undefined }) => (
-        <Posts key={post.id} post={post} />
+        <Post key={post.id} post={post} />
       ))}
     </>
   );

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { loadUser } from "@/actions/user";
-import WysiwygEditor from "@/components/toast/WysiwygEditor";
+import WysiwygEditor from "@/components/Toast/WysiwygEditor";
 
 const Container = styled.div`
   width: 80%;

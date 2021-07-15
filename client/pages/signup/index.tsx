@@ -72,12 +72,12 @@ const Signup: FC<AppProps> = () => {
         alert("이메일을 입력하세요.");
         return;
       }
-      if (password === "") {
-        alert("비밀번호을 입력하세요.");
-        return;
-      }
       if (nickname === "") {
         alert("닉네임을 입력하세요.");
+        return;
+      }
+      if (password === "") {
+        alert("비밀번호을 입력하세요.");
         return;
       }
       if (password !== passwordCheck) {
