@@ -2,7 +2,7 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import * as React from "react";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
-import { TuiEditorWithForwardedProps } from "@/components/toast/Editor";
+import { TuiEditorWithForwardedProps } from "@/components/Toast/Editor";
 import { useDispatch } from "react-redux";
 import { addPost } from "@/actions/post";
 import useInput from "@/hooks/useInput";
