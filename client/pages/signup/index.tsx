@@ -67,6 +67,19 @@ const Signup: FC<AppProps> = () => {
     (e) => {
       e.preventDefault();
       console.log(email, nickname, password);
+
+      if (email === "") {
+        alert("이메일을 입력하세요.");
+        return;
+      }
+      if (password === "") {
+        alert("비밀번호을 입력하세요.");
+        return;
+      }
+      if (nickname === "") {
+        alert("닉네임을 입력하세요.");
+        return;
+      }
       if (password !== passwordCheck) {
         alert("비밀번호가 서로 맞지 않습니다.");
         return;

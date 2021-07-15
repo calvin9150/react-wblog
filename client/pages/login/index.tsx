@@ -48,6 +48,14 @@ const Login: FC = () => {
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (email === "") {
+        alert("이메일을 입력하세요.");
+        return;
+      } else if (password === "") {
+        alert("비밀번호를 입력하세요.");
+        return;
+      }
+
       dispatch(
         signin({
           email,
