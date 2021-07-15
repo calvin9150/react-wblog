@@ -41,6 +41,32 @@ router.post("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.post("/:postId/post", async (req, res, next) => {
+  try {
+    const fullPost = await Post.findOne({
+      where: { id: parseInt(req.body.postId) },
+      include: [
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+      ],
+    });
+    res.status(201).json(fullPost);
+  } catch (err) {
+    return console.error(err);
+  }
+});
+
 router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({

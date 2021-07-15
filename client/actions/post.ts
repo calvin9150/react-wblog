@@ -20,6 +20,19 @@ export const addPost = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "delete/deletepost",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const result = await axios.delete(`/post/${data.id}`, data);
+      return result;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.result.data);
+    }
+  }
+);
+
 export const loadPosts = createAsyncThunk("post/loadposts", async () => {
   try {
     const result = await axios.get("/posts");
@@ -28,6 +41,21 @@ export const loadPosts = createAsyncThunk("post/loadposts", async () => {
     console.error(err);
   }
 });
+
+export const loadPost = createAsyncThunk(
+  "post/loadpost",
+  async (data: any, { rejectWithValue }) => {
+    console.log("dataaasddsadsaads");
+    console.log(data);
+    try {
+      const result = await axios.post(`/post/${data.postId}/post`, data);
+      return result;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.result.data);
+    }
+  }
+);
 
 export const loadJavascript = createAsyncThunk(
   "post/loadjavascript",

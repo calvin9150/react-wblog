@@ -1,20 +1,34 @@
+import { loadPost } from "@/actions/post";
 import { loadUser } from "@/actions/user";
+import Posts from "@/components/Posts";
+import { ReducerType } from "@/reducers";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PostAll() {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const postId: any = router.query.postId;
 
   useEffect(() => {
     dispatch(loadUser());
-  });
+    dispatch(loadPost({ postId }));
+    console.log(postId);
+  }, [postId]);
+
+  const { mainPosts } = useSelector((state: ReducerType) => state.post);
+
   return (
     <>
       <Head>
         <title>Wblog 카테고리</title>
       </Head>
-      <h1> category index </h1>
+      <h1>category {postId} 번 게시글</h1>
+      {mainPosts.map((post: { id: React.Key | null | undefined }) => (
+        <Posts key={post.id} post={post} />
+      ))}
     </>
   );
 }

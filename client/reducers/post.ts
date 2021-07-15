@@ -1,9 +1,15 @@
-import { loadJavascript, loadPosts, loadTravel } from "./../actions/post";
+import {
+  loadJavascript,
+  loadPost,
+  loadPosts,
+  loadTravel,
+} from "./../actions/post";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { addPost } from "@/actions/post";
 
 export interface Post {
+  id: number | null;
   title: string | null;
   content: string | null;
   category: string | null;
@@ -14,6 +20,9 @@ const initialState = {
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
   loadPostLoading: false,
   loadPostDone: false,
   loadPostError: null,
@@ -44,15 +53,29 @@ export const postSlice = createSlice({
       .addCase(addPost.rejected, (state, action: PayloadAction<any>) => {
         state.addPostError = action.payload;
       })
-      .addCase(loadPosts.pending, (state: { loadPostLoading: boolean }) => {
-        state.loadPostLoading = true;
+      .addCase(loadPosts.pending, (state: { loadPostsLoading: boolean }) => {
+        state.loadPostsLoading = true;
       })
       .addCase(loadPosts.fulfilled, (state, action: PayloadAction<any>) => {
-        state.loadPostLoading = false;
-        state.loadPostDone = true;
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
         state.mainPosts = action.payload.data;
       })
       .addCase(loadPosts.rejected, (state, action: PayloadAction<any>) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.payload;
+      })
+      .addCase(loadPost.pending, (state: { loadPostLoading: boolean }) => {
+        state.loadPostLoading = true;
+      })
+      .addCase(loadPost.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loadPostLoading = false;
+        state.loadPostDone = true;
+        const arr: any = [];
+        arr.push(action.payload.data);
+        state.mainPosts = arr;
+      })
+      .addCase(loadPost.rejected, (state, action: PayloadAction<any>) => {
         state.loadPostLoading = false;
         state.loadPostError = action.payload;
       })
