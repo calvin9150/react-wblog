@@ -1,9 +1,10 @@
-import { deletePost } from "@/actions/post";
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import Link from "next/link";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+
+import { deletePost } from "@/actions/post";
 
 const Layout = styled.div`
   width: 50%;

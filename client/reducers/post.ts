@@ -1,4 +1,5 @@
 import {
+  addComment,
   loadJavascript,
   loadPost,
   loadPosts,
@@ -26,6 +27,9 @@ const initialState = {
   loadPostLoading: false,
   loadPostDone: false,
   loadPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
   loadJavascriptLoading: false,
   loadJavascriptDone: false,
   loadJavascriptError: null,
@@ -108,6 +112,22 @@ export const postSlice = createSlice({
       .addCase(loadTravel.rejected, (state, action: PayloadAction<any>) => {
         state.loadTravelLoading = false;
         state.loadTravelError = action.payload;
+      })
+      .addCase(addComment.pending, (state, action: PayloadAction) => {
+        state.addCommentLoading = true;
+        state.addCommentError = null;
+      })
+      .addCase(addComment.fulfilled, (state, action: PayloadAction<any>) => {
+        state.addCommentLoading = false;
+        const post = state.mainPosts.find(
+          (i) => i.id === action.payload.PostId
+        );
+        state.addCommentDone = true;
+        state.addCommentError = action.payload;
+      })
+      .addCase(addComment.rejected, (state, action: PayloadAction<any>) => {
+        state.addCommentLoading = false;
+        state.addCommentError = action.payload;
       });
   },
 });

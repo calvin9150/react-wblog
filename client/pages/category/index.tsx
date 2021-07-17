@@ -11,6 +11,9 @@ export default function PostAll() {
   const dispatch = useDispatch();
   const router = useRouter();
   const postId: any = router.query.postId;
+  type mainPosts = {
+    [Comments: string]: string;
+  };
 
   useEffect(() => {
     dispatch(loadUser());

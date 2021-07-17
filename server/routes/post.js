@@ -70,15 +70,15 @@ router.post("/:postId/post", async (req, res, next) => {
 router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({
-      where: { id: req.params.post },
+      where: { id: req.body.postId },
     });
     if (!post) {
       return res.status(403).send("존재하지 않는 게시글입니다..");
     }
     const comment = await Comment.create({
       content: req.body.content,
-      PostId: parseInt(req.params.postId, 10),
-      UserId: req.user.id,
+      PostId: parseInt(req.body.postId),
+      UserId: req.body.userId,
     });
 
     const fullComment = await Comment.findOne({
@@ -90,9 +90,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
         },
       ],
     });
-    await Post.create({
-      content: req.body.content,
-    });
+
     res.status(201).json(fullComment);
   } catch (err) {
     console.error(err);

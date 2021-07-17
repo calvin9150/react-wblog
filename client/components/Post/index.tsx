@@ -1,9 +1,13 @@
-import { deletePost } from "@/actions/post";
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { FC, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
+import { addComment, deletePost } from "@/actions/post";
+import useInput from "@/hooks/useInput";
+import { ReducerType } from "@/reducers";
+import Comments from "../Comments";
 
 const Layout = styled.div`
   width: 50%;
@@ -22,14 +26,15 @@ const Title = styled.div`
 
 const Content = styled.div`
   width: 100%;
+  margin-bottom: 100px;
   min-height: 150px;
   overflow: hidden;
 `;
 
 const Comment = styled.div`
   width: 100%;
-  height: 200px;
-  margin: 50px 0;
+  height: 250px;
+  margin: 20px 0;
   border-top: 2px ridge rgba(135, 137, 137, 0.267);
 
   p {
@@ -58,18 +63,33 @@ const Comment = styled.div`
   }
 `;
 
+const CommentsLayout = styled.div`
+  border-top: 1px ridge rgba(135, 137, 137, 0.267);
+  padding: 30px 10px;
+`;
+
 const Post: FC<AppProps> = ({ post }) => {
   const dispatch = useDispatch();
   const title = post.title;
   const content = post.content;
-  const id = post.id;
+  const postId = post.id;
+  const userId = useSelector((state: ReducerType) => state.user.user.id);
 
   const [count, setCount] = useState(0);
+  const [commentText, setCommentText] = useState("");
 
   const createContent = () => {
     return { __html: content };
   };
 
+  const onSubmitComment = useCallback(() => {
+    dispatch(addComment({ content: commentText, postId, userId }));
+    console.log(commentText, postId, userId);
+  }, [dispatch, commentText, postId, userId]);
+  const { mainPosts } = useSelector((state: ReducerType) => state.post);
+
+  console.log("그러하다");
+  console.log(mainPosts[0]?.Comments);
   // const deleteClick = useEffect(() => {
   //   dispatch(deletePost(id));
   // }, []);
@@ -83,13 +103,24 @@ const Post: FC<AppProps> = ({ post }) => {
         <Content dangerouslySetInnerHTML={createContent()} />
 
         {/* <button onClick={deleteClick}>삭제</button> */}
+        <CommentsLayout>
+          {mainPosts[0]?.Comments.map((comments) => (
+            <Comments key={comments.id} Comments={comments}></Comments>
+          ))}
+        </CommentsLayout>
         <Comment>
           <p>{count}/200</p>
           <textarea
             maxLength={200}
-            onChange={(e) => setCount(e.target.value.length)}
+            onChange={(e) => {
+              setCount(e.target.value.length);
+              setCommentText(e.target.value);
+            }}
           ></textarea>
-          <button>댓글 등록</button>
+
+          <button type="submit" onClick={onSubmitComment}>
+            댓글 등록
+          </button>
         </Comment>
       </Layout>
     </>

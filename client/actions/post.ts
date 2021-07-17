@@ -45,10 +45,23 @@ export const loadPosts = createAsyncThunk("post/loadposts", async () => {
 export const loadPost = createAsyncThunk(
   "post/loadpost",
   async (data: any, { rejectWithValue }) => {
-    console.log("dataaasddsadsaads");
-    console.log(data);
     try {
       const result = await axios.post(`/post/${data.postId}/post`, data);
+      return result;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.result.data);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk(
+  "post/addcomment",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      console.log("데이타" + data);
+      console.log(data);
+      const result = await axios.post(`/post/${data.postId}/comment`, data);
       return result;
     } catch (err) {
       console.error(err);
