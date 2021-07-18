@@ -115,6 +115,7 @@ export const postSlice = createSlice({
       })
       .addCase(addComment.pending, (state, action: PayloadAction) => {
         state.addCommentLoading = true;
+        state.addCommentDone = false;
         state.addCommentError = null;
       })
       .addCase(addComment.fulfilled, (state, action: PayloadAction<any>) => {
@@ -127,6 +128,7 @@ export const postSlice = createSlice({
       })
       .addCase(addComment.rejected, (state, action: PayloadAction<any>) => {
         state.addCommentLoading = false;
+        state.addCommentDone = false;
         state.addCommentError = action.payload;
       });
   },

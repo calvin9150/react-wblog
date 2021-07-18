@@ -11,6 +11,7 @@ export default function PostAll() {
   const dispatch = useDispatch();
   const router = useRouter();
   const postId: any = router.query.postId;
+  const { addCommentDone } = useSelector((state: ReducerType) => state.post);
   type mainPosts = {
     [Comments: string]: string;
   };
@@ -18,8 +19,7 @@ export default function PostAll() {
   useEffect(() => {
     dispatch(loadUser());
     dispatch(loadPost({ postId }));
-    console.log(postId);
-  }, [postId]);
+  }, [postId, addCommentDone]);
 
   const { mainPosts } = useSelector((state: ReducerType) => state.post);
 

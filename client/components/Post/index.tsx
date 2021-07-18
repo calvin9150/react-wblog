@@ -95,12 +95,6 @@ const Post: FC<AppProps> = ({ post }) => {
     [dispatch, commentText, postId, userId]
   );
 
-  useEffect(() => {
-    if (addCommentDone) {
-      dispatch(loadPost({ postId }));
-    }
-  }, [addCommentDone]);
-
   // const deleteClick = useEffect(() => {
   //   dispatch(deletePost(id));
   // }, []);
