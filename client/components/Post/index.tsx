@@ -4,7 +4,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { addComment, deletePost } from "@/actions/post";
+import { addComment, deletePost, loadPost } from "@/actions/post";
 import useInput from "@/hooks/useInput";
 import { ReducerType } from "@/reducers";
 import Comments from "../Comments";
@@ -74,6 +74,9 @@ const Post: FC<AppProps> = ({ post }) => {
   const content = post.content;
   const postId = post.id;
   const userId = useSelector((state: ReducerType) => state.user.user.id);
+  const { mainPosts, addCommentDone } = useSelector(
+    (state: ReducerType) => state.post
+  );
 
   const [count, setCount] = useState(0);
   const [commentText, setCommentText] = useState("");
@@ -82,11 +85,21 @@ const Post: FC<AppProps> = ({ post }) => {
     return { __html: content };
   };
 
-  const onSubmitComment = useCallback(() => {
-    dispatch(addComment({ content: commentText, postId, userId }));
-    console.log(commentText, postId, userId);
-  }, [dispatch, commentText, postId, userId]);
-  const { mainPosts } = useSelector((state: ReducerType) => state.post);
+  const onSubmitComment = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(addComment({ content: commentText, postId, userId }));
+      setCommentText("");
+      e.target.reset();
+    },
+    [dispatch, commentText, postId, userId]
+  );
+
+  useEffect(() => {
+    if (addCommentDone) {
+      dispatch(loadPost({ postId }));
+    }
+  }, [addCommentDone]);
 
   // const deleteClick = useEffect(() => {
   //   dispatch(deletePost(id));
@@ -108,17 +121,17 @@ const Post: FC<AppProps> = ({ post }) => {
         </CommentsLayout>
         <Comment>
           <p>{count}/200</p>
-          <textarea
-            maxLength={200}
-            onChange={(e) => {
-              setCount(e.target.value.length);
-              setCommentText(e.target.value);
-            }}
-          ></textarea>
+          <form onSubmit={onSubmitComment}>
+            <textarea
+              maxLength={200}
+              onChange={(e) => {
+                setCount(e.target.value.length);
+                setCommentText(e.target.value);
+              }}
+            ></textarea>
 
-          <button type="submit" onClick={onSubmitComment}>
-            댓글 등록
-          </button>
+            <button type="submit">댓글 등록</button>
+          </form>
         </Comment>
       </Layout>
     </>

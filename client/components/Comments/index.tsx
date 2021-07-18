@@ -13,7 +13,7 @@ const CommentsList = styled.div`
 
   div {
     padding: 10px 0;
-    width: 80%;
+    width: 90%;
   }
 
   .content {

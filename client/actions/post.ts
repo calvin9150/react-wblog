@@ -59,9 +59,8 @@ export const addComment = createAsyncThunk(
   "post/addcomment",
   async (data: any, { rejectWithValue }) => {
     try {
-      console.log("데이타" + data);
-      console.log(data);
       const result = await axios.post(`/post/${data.postId}/comment`, data);
+      // window.location.reload();
       return result;
     } catch (err) {
       console.error(err);

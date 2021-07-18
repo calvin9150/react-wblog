@@ -25,9 +25,6 @@ export default function PostAll() {
 
   return (
     <>
-      <Head>
-        <title>Wblog 카테고리</title>
-      </Head>
       <h1>category {postId} 번 게시글</h1>
       {mainPosts.map((post: { id: React.Key | null | undefined }) => (
         <Post key={post.id} post={post} />
