@@ -20,7 +20,7 @@ const Title = styled.div`
   width: 100%;
   min-height: 70px;
   margin-bottom: 50px;
-  border-bottom: 1px ridge rgba(135, 137, 137, 0.26);
+  border-bottom: 2px ridge rgba(135, 137, 137, 0.26);
   font-size: 40px;
 `;
 
@@ -64,7 +64,7 @@ const Comment = styled.div`
 `;
 
 const CommentsLayout = styled.div`
-  border-top: 1px ridge rgba(135, 137, 137, 0.267);
+  border-top: 3px ridge rgba(135, 137, 137, 0.267);
   padding: 30px 10px;
 `;
 
@@ -88,8 +88,6 @@ const Post: FC<AppProps> = ({ post }) => {
   }, [dispatch, commentText, postId, userId]);
   const { mainPosts } = useSelector((state: ReducerType) => state.post);
 
-  console.log("그러하다");
-  console.log(mainPosts[0]?.Comments);
   // const deleteClick = useEffect(() => {
   //   dispatch(deletePost(id));
   // }, []);
