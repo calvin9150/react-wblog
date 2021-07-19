@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signup, signin, logout, loadUser } from "@/actions/user";
+import { signup, signin, logout, loadUser, loadUserInfo } from "@/actions/user";
 
 export interface User {
   id: number | null;
@@ -8,11 +8,23 @@ export interface User {
   password: string | null;
 }
 
+export interface Me {
+  id: number | null;
+  email: string | null;
+  nickname: string | null;
+  password: string | null;
+}
+
 const initialState = {
   user: <User>{
-    email: "",
-    nickname: "",
-    password: "",
+    email: null,
+    nickname: null,
+    password: null,
+  },
+  me: <Me>{
+    email: null,
+    nickname: null,
+    password: null,
   },
   signupLoading: false,
   signupDone: false,
@@ -26,6 +38,9 @@ const initialState = {
   loadUserLoading: false,
   loadUserDone: false,
   loadUserError: null,
+  loadUserInfoLoading: false,
+  loadUserInfoDone: false,
+  loadUserInfoError: null,
 };
 
 export const userSlice = createSlice({
@@ -85,6 +100,24 @@ export const userSlice = createSlice({
       })
       .addCase(
         loadUser.rejected,
+        (state, action: PayloadAction<any, string>) => {
+          state.loadUserLoading = false;
+          state.loadUserDone = false;
+          state.loadUserError = action.payload;
+        }
+      )
+      .addCase(loadUserInfo.pending, (state) => {
+        state.loadUserInfoLoading = true;
+        state.loadUserInfoDone = false;
+        state.loadUserInfoError = null;
+      })
+      .addCase(loadUserInfo.fulfilled, (state, action: PayloadAction<User>) => {
+        state.loadUserInfoLoading = false;
+        state.loadUserInfoDone = true;
+        state.me = action.payload;
+      })
+      .addCase(
+        loadUserInfo.rejected,
         (state, action: PayloadAction<any, string>) => {
           state.loadUserLoading = false;
           state.loadUserDone = false;

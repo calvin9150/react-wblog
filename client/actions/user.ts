@@ -59,3 +59,15 @@ export const loadUser = createAsyncThunk("/user/load", async () => {
     return console.log(err);
   }
 });
+
+export const loadUserInfo = createAsyncThunk(
+  "/user/loadUserInfo",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios.get("/user");
+      return result.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
-import { loadUser } from "@/actions/user";
+import { loadUser, loadUserInfo } from "@/actions/user";
 import { loadPosts } from "@/actions/post";
 import Posts from "@/components/Posts";
 import { ReducerType } from "@/reducers";
@@ -36,7 +36,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
-    await context.store.dispatch(loadUser());
+    await context.store.dispatch(loadUserInfo());
     await context.store.dispatch(loadPosts());
 
     return {
