@@ -69,8 +69,9 @@ export const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.payload;
       })
-      .addCase(loadPost.pending, (state: { loadPostLoading: boolean }) => {
+      .addCase(loadPost.pending, (state) => {
         state.loadPostLoading = true;
+        state.mainPosts = [];
       })
       .addCase(loadPost.fulfilled, (state, action: PayloadAction<any>) => {
         state.loadPostLoading = false;

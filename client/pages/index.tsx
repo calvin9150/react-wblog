@@ -8,6 +8,7 @@ import Posts from "@/components/Posts";
 import { ReducerType } from "@/reducers";
 import wrapper from "@/store/store";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import axios from "axios";
 
 function Home() {
   const dispatch = useDispatch();
@@ -28,11 +29,29 @@ function Home() {
     </>
   );
 }
-export const getServerSideProps = wrapper.getServerSideProps((context) => {
-  (context.store.dispatch as ThunkDispatch<any, void, AnyAction>)(loadUser());
-  (context.store.dispatch as ThunkDispatch<any, void, AnyAction>)(loadPosts());
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    await context.store.dispatch(loadUser());
+    await context.store.dispatch(loadPosts());
 
+    return {
+      props: {},
+    };
+  }
+);
+
+// SSR 세팅 전
+// export const getServerSideProps = wrapper.getServerSideProps((context) => {
+//   (context.store.dispatch as ThunkDispatch<any, void, AnyAction>)(loadUser());
+//   (context.store.dispatch as ThunkDispatch<any, void, AnyAction>)(loadPosts());
+// });
+
+// SSR test1
 // export const getServerSideProps = wrapper.getServerSideProps(
 //   (store) =>
 //     async ({ req, res, next }) => {

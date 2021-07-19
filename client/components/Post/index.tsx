@@ -88,6 +88,15 @@ const Post: FC<AppProps> = ({ post }) => {
   const onSubmitComment = useCallback(
     (e) => {
       e.preventDefault();
+      console.log(userId);
+      if (!userId) {
+        alert("로그인 후 댓글 등록이 가능합니다.");
+        return;
+      }
+      if (!commentText) {
+        alert("댓글 내용을 입력해 주세요.");
+        return;
+      }
       dispatch(addComment({ content: commentText, postId, userId }));
       setCommentText("");
       e.target.reset();
