@@ -26,17 +26,21 @@ const CommentsList = styled.div`
   }
 `;
 
-const Comments: FC<AppProps> = ({ Comments }) => {
+type Props = {
+  comments: any;
+};
+
+const Comments = ({ comments }: Props) => {
   const dateRegex = /[A-za-z]/g;
-  const date = Comments?.createdAt.replace(dateRegex, " ").substr(0, 19);
+  const date = comments?.createdAt.replace(dateRegex, " ").substr(0, 19);
   return (
     <>
       <CommentsList>
         <div className="content">
           <div>
-            <strong>{Comments.User?.nickname}</strong>
+            <strong>{comments.User?.nickname}</strong>
           </div>
-          <div>{Comments.content}</div>
+          <div>{comments.content}</div>
         </div>
 
         <div className="date">{date}</div>

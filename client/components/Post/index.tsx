@@ -74,9 +74,7 @@ const Post: FC<AppProps> = ({ post }) => {
   const content = post.content;
   const postId = post.id;
   const userId = useSelector((state: ReducerType) => state.user.user.id);
-  const { mainPosts, addCommentDone } = useSelector(
-    (state: ReducerType) => state.post
-  );
+  const { mainPosts, addCommentDone } = useSelector((state: ReducerType) => state.post);
 
   const [count, setCount] = useState(0);
   const [commentText, setCommentText] = useState("");
@@ -118,8 +116,8 @@ const Post: FC<AppProps> = ({ post }) => {
 
         {/* <button onClick={deleteClick}>삭제</button> */}
         <CommentsLayout>
-          {mainPosts[0]?.Comments.map((comments) => (
-            <Comments key={comments.id} Comments={comments}></Comments>
+          {mainPosts[0]?.Comments.map((comments: any) => (
+            <Comments key={comments.id} comments={comments}></Comments>
           ))}
         </CommentsLayout>
         <Comment>
